@@ -16,7 +16,7 @@ async function handleRequest(request) {
   }
 
   // Add the affiliate parameter to the URL while preserving the existing search params
-  url.search += (url.search ? '&' : '') + 'sub_affiliate=0x3B98AFD0Bb4b4291eD825d1A8d5E62b14800cf9e&domain=checkout.yourdomain.com';
+  url.search += (url.search ? '&' : '') + 'sub_affiliate=0x3B98AFD0Bb4b4291eD825d1A8d5E62b14800cf9e&domain=payment.yourdomain.com';
   
   // Set custom fees for total should always be 0.985
   url.search += (url.search ? '&' : '') + 'sub_affiliate_fee=0.01'; // An example where you wanted to receive a 1% commission of the total payout.
