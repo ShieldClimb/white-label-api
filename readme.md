@@ -8,7 +8,7 @@ Easily rebrand ShieldClimb’s API (`https://api.shieldclimb.com`) to run under 
    Set up a new worker from your Cloudflare dashboard.
 
 2. **Configure the Worker Script**  
-   Replace the worker code with your chosen `worker.js`. You can use the **hidden affiliate version** to embed your wallet directly, keeping it invisible to your sub-merchants.
+   Replace the worker code with the **hidden-affiliate-worker.js** to embed your wallet directly, keeping it invisible to your sub-merchants.
 
 3. **Set Your Affiliate Wallet**  
    Replace the example wallet: 0x3B98AFD0Bb4b4291eD825d1A8d5E62b14800cf9e with your own affiliate wallet address.
@@ -33,4 +33,5 @@ Easily rebrand ShieldClimb’s API (`https://api.shieldclimb.com`) to run under 
 
 For detailed instructions and best practices, see the full guide:  
 [White-Label API Custom Domain Setup Guide](https://shieldclimb.com/white-label-api-custom-domain-setup-guide/)
+[API Documentation](https://shieldclimb.com/high-risk-payment-gateway/)
 
