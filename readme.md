@@ -33,5 +33,5 @@ Easily rebrand ShieldClimb’s API (`https://api.shieldclimb.com`) to run under 
 
 For detailed instructions and best practices, see the full guide:  
 - [White-Label API Custom Domain Setup Guide](https://shieldclimb.com/white-label-api-custom-domain-setup-guide/)
-- [API Documentation](https://shieldclimb.com/high-risk-payment-gateway/)
+- [API Documentation](https://shieldclimb.com/high-risk-payment-gateway/#api-documentation)
 
