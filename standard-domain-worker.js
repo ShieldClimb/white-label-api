@@ -11,15 +11,30 @@ async function handleRequest(request) {
   url.hostname = new URL(targetUrl).hostname;
   
     // Add the domain parameter to the URL while preserving the existing search params
+ if (!url.pathname.includes('process-payment.php')) {
   url.search += (url.search ? '&' : '') + 'domain=payment.yourdomain.com';
+ }
   
-  const modifiedRequest = new Request(url.toString(), request);
+  const modifiedRequest = new Request(url.toString(), {
+  method: request.method,
+  headers: {
+    ...Object.fromEntries(request.headers),
+    'PGTO-IPCountry': request.cf?.country || 'XX'
+  },
+  body: request.body ? request.clone().body : null,
+  redirect: 'manual'
+});
+
   
   // Make a request to the target URL
   const response = await fetch(modifiedRequest);
+  
+  if (response.status >= 300 && response.status < 400) {
+    return response;
+  }
 
   // Check if the response status code is in the 40X range and redirect to custom error page
-  if (response.status >= 400 && response.status < 500) {
+  if (response.status >= 400) {
     return Response.redirect('https://www.yourdomain.com/error', 302);
   }
 

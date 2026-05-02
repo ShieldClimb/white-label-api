@@ -13,23 +13,38 @@ async function handleRequest(request) {
   // Check if the path contains "wallet.php" and replace it with "set-affiliate.php"
   if (url.pathname.includes('/control/wallet.php')) {
     url.pathname = url.pathname.replace('/control/wallet.php', '/set-affiliate.php');
+  } else if (url.pathname.includes('/crypto/cards/wallet.php')) {
+	url.pathname = url.pathname.replace('/crypto/cards/wallet.php', '/vcc-set-affiliate.php');
   }
-
+if (!url.pathname.includes('process-payment.php')) {
   // Add the affiliate parameter to the URL while preserving the existing search params
-  url.search += (url.search ? '&' : '') + 'sub_affiliate=0x3B98AFD0Bb4b4291eD825d1A8d5E62b14800cf9e&domain=payment.yourdomain.com';
+  url.search += (url.search ? '&' : '') + 'sub_affiliate=0x9eC55CCbDa93bCEe3936e5CaC76cA623f5BF6E9B&domain=payment.yourdomain.com';
   
   // Set custom fees for total should always be 0.985
   url.search += (url.search ? '&' : '') + 'sub_affiliate_fee=0.01'; // An example where you wanted to receive a 1% commission of the total payout.
   url.search += (url.search ? '&' : '') + 'merchant_fee=0.975'; 
-  
+}
   // Create a modified request with the updated URL
-  const modifiedRequest = new Request(url.toString(), request);
+  const modifiedRequest = new Request(url.toString(), {
+  method: request.method,
+  headers: {
+    ...Object.fromEntries(request.headers),
+    'PGTO-IPCountry': request.cf?.country || 'XX'
+  },
+  body: request.body ? request.clone().body : null,
+  redirect: 'manual'
+});
+
 
   // Make a request to the target URL
   const response = await fetch(modifiedRequest);
+  
+  if (response.status >= 300 && response.status < 400) {
+    return response;
+  }
 
-  // If the response status code is in the 40X range, redirect to custom error page https://www.yourdomain.com/error
-  if (response.status >= 400 && response.status < 500) {
+  // If the response status code is in the 40X range, redirect to custom error page https://www.example.com/error
+  if (response.status >= 400) {
     return Response.redirect('https://www.yourdomain.com/error', 302);
   }
 
